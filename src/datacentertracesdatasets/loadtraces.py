@@ -9,7 +9,7 @@ def __get_alibaba_2018_trace(trace="machine_usage", stride_seconds=10):
     from . import alibaba2018
     assert trace in ["machine_usage"], 'only "machine_usage" trace is supported right now for alibaba'
     assert stride_seconds in [10, 30, 300], 'only 10, 30 and 300 seconds are currently suported as stride_seconds in alibaba 2018 machine usage'
-    contents = pkg_resources.read_text(alibaba2018, f'{trace}_days_1_to_8_grouped_{stride_seconds}_seconds.csv')
+    contents = pkg_resources.read_text(alibaba2018, f'{trace}_grouped_{stride_seconds}_seconds.csv')
     return pd.read_csv(StringIO(contents), index_col=False)
 
 
@@ -32,7 +32,7 @@ def __get_google_2019_trace(trace="machine_usage", stride_seconds=300):
     from . import google2019
     assert trace in ["machine_usage"], 'only "machine_usage" trace is supported right now for azure_v2'
     assert stride_seconds in [300], 'only 300 seconds is currently suported as stride_seconds in google2019'
-    contents = pkg_resources.read_text(google2019, f'{trace}_grouped_{stride_seconds}_seconds.csv')
+    contents = pkg_resources.read_text(google2019, f'{trace}_grouped_{stride_seconds}_seconds_percent.csv')
     return pd.read_csv(StringIO(contents), index_col=False)
 
 def get_trace(trace_name='alibaba2018', trace_type='machine_usage', stride_seconds=300, format='dataframe'):
