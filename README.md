@@ -53,9 +53,9 @@ This repository dataset of instance usage includes the following columns:
 +--------------------------------------------------------------------------------------------+
 | Field                         | Type       | Label | Comment                               |
 +--------------------------------------------------------------------------------------------+
-| avg_cpu                       | double     |       | [0, 1]                                |
-| avg_mem                       | double     |       | [0, 1]                                |
-| avg_assigned_mem              | double     |       | [0, 1]                                |
+| cpu_util_percent              | double     |       | [0, 100]                              |
+| mem_util_percent              | double     |       | [0, 100]                              |
+| assigned_mem_percent          | double     |       | [0, 100]                              |
 | avg_cycles_per_instruction    | double     |       | [0, _]                                |
 +--------------------------------------------------------------------------------------------+
 ```
@@ -125,29 +125,96 @@ To load the original Alibaba's 2018 machine usage, with the mean usage of all ma
 
 ```Python
 from datacentertracesdatasets import loadtraces
-alibaba_2018_machine_usage_df = loadtraces.get_alibaba_2018_trace()
+alibaba_2018_original_machine_usage_df = loadtraces.get_trace(trace_name='alibaba2018', trace_type='machine_usage', stride_seconds=10)
 ```
 
 If, instead of a Pandas DataFrame, a numpy NDArray is needed, the ```format``` parameter can be used:
 
 ```Python
-alibaba_2018_machine_usage_ndarray = loadtraces.get_alibaba_2018_trace(format='ndarray')
+azure_v2_machine_usage_ndarray = loadtraces.get_trace(trace_name='azure_v2', trace_type='machine_usage', stride_seconds=300, format='ndarray')
 ```
 
-More parameters can be passed, such as a particular ```day``` to be retrieved:
+Or, for Google 2019 machine usage:
+```Python
+azure_v2_machine_usage_ndarray = loadtraces.get_trace(trace_name='google2019', trace_type='machine_usage', stride_seconds=300, format='ndarray')
+```
+
+In addition to the original Alibaba 2018 machine usage dataset, which has a 10-seconds timestep, two additional downsampled versions of 30 and 300 seconds timesteps are provided, which can be retrieved by using the ```stride_seconds``` argument:
 
 ```Python
-alibaba_2018_machine_usage_day_5_df = loadtraces.get_alibaba_2018_trace(day='5')
+alibaba_2018_machine_usage_300_timestep_df = loadtraces.get_trace(trace_name='alibaba2018', trace_type='machine_usage', stride_seconds=300, format='ndarray')
 ```
 
-In addition to the original dataset, which has a 10-seconds timestep, two additional downsampled versions of 30 and 300 seconds timesteps are provided, which can be retrieved by using the ```stride_seconds``` argument:
+## Dataset metadata
+
+The dataset structure and metadata can be retrieved with the ```get_dataset_info``` method:
 
 ```Python
-alibaba_2018_machine_usage_300_timestep_df = loadtraces.get_alibaba_2018_trace(stride_seconds=300)
+dataset_info = get_dataset_info(trace_name='alibaba2018', trace_type='machine_usage', stride_seconds=300)
 ```
 
-Currently only Alibaba 2018's machine usage trace is available. In the future, we plan to add the following:
-* Google's 2019 machine usage trace.
-* Azure v2 virtual machine usage trace.
+Which returns:
+
+````Python
+dataset_info = {
+                "timestamp_frequency_secs": 300,
+                "column_config": {
+                    "cpu_util_percent": {
+                        "column_index": 0,
+                        "y_axis_min": 0,
+                        "y_axis_max": 100
+                    },
+                    "mem_util_percent": {
+                        "column_index": 1,
+                        "y_axis_min": 0,
+                        "y_axis_max": 100
+                    },
+                    "net_in": {
+                        "column_index": 2,
+                        "y_axis_min": 0,
+                        "y_axis_max": 100
+                    },
+                    "net_out": {
+                        "column_index": 3,
+                        "y_axis_min": 0,
+                        "y_axis_max": 100
+                    },
+                    "disk_io_percent": {
+                        "column_index": 4,
+                        "y_axis_min": 0,
+                        "y_axis_max": 100
+                    }
+
+                },
+                "metadata": {
+                    "fields": {
+                        "cpu_util_percent": {
+                            "type": "numerical",
+                            "subtype": "float"
+                        },
+                        "mem_util_percent": {
+                            "type": "numerical",
+                            "subtype": "float"
+                        },
+                        "net_in": {
+                            "type": "numerical",
+                            "subtype": "float"
+                        },
+                        "net_out": {
+                            "type": "numerical",
+                            "subtype": "float"
+                        },
+                        "disk_io_percent": {
+                            "type": "numerical",
+                            "subtype": "float"
+                        }
+                    }
+                }
+            }
+````
+
+
+
+Currently only Alibaba 2018's, Google 2019's and Azure_V2 (virtual) machine usage traces are available. In the future, we plan to add the following:
 * Alibaba's 2018 batch_task workload trace.
 * Google's 2019 batch_task workload trace.
