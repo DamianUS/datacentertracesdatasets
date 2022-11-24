@@ -159,10 +159,10 @@ def get_dataset_info(trace_name='alibaba2018', trace_type='machine_usage', strid
             dataset_info = {
                 "timestamp_frequency_secs": stride_seconds,
                 "column_config": {
-                    "assigned_mem": {
+                    "cpu_usage": {
                         "column_index": 0
                     },
-                    "mem_total": {
+                    "assigned_mem": {
                         "column_index": 1
                     }
                 },
