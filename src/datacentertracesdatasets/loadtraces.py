@@ -136,15 +136,15 @@ def get_dataset_info(trace_name='alibaba2018', trace_type='machine_usage', strid
                 },
                 "metadata": {
                     "fields": {
-                        "cpu": {
+                        "cpu_util_percent": {
                             "type": "numerical",
                             "subtype": "float"
                         },
-                        "mem": {
+                        "mem_util_percent": {
                             "type": "numerical",
                             "subtype": "float"
                         },
-                        "assigned_mem": {
+                        "assigned_mem_percent": {
                             "type": "numerical",
                             "subtype": "float"
                         },
