@@ -3,12 +3,14 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 [project]
 name='datacentertracesdatasets'
-version='0.2.4'
+version='0.3.1'
 description='Data center traces for machine learning tasks'
 authors=[
     {name = "Alejandro Fernández-Montes González", email="afdez@us.es"}, {name = "Damián Fernández Cerero", email="damiancerero@us.es"}
 ]
 dependencies=['pandas', 'numpy']
+
+readme = 'README.md'
 classifiers=[
     'Development Status :: 1 - Planning',
     'Intended Audience :: Science/Research',

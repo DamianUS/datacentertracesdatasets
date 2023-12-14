@@ -18,3 +18,4 @@ src/datacentertracesdatasets/azure_v2/machine_usage_grouped_300_seconds.csv
 src/datacentertracesdatasets/google2019/__init__.py
 src/datacentertracesdatasets/google2019/machine_usage_grouped_300_seconds.csv
 src/datacentertracesdatasets/google2019/machine_usage_grouped_300_seconds_percent.csv
+tests/test.py
